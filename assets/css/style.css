@@ -5,13 +5,8 @@ html, body {
   height: 100%;
 }
 
-html {
-  min-height: 100%;
-}
-
-body {
-  font-family: 'Electrolize', sans-serif;
-}
+html { min-height: 100%; }
+body { font-family: 'Electrolize', sans-serif; }
 
 .wrapper {
   min-height: 100%;
@@ -29,7 +24,7 @@ body {
   background-size: cover;
 }
 
-h1 { 
+.game-title { 
   display: block;
   box-sizing: border-box;
   font-size: 3em;
@@ -38,14 +33,38 @@ h1 {
   font-weight: bold;
 }
 
-#characters-select { 
-  width: 70%;
+.action-console {
+  background-color: #000;
+  color: #fff;
+  font-size: 15px;
+  border: 2px solid #fff;
+  width: 100%;
+  height: 45px;
+  padding-top: 1em;
+}
+
+#characters-select, #enemy-select { 
+  width: 75%;
   margin: 0 auto;
   padding-left: 45px;
 }
 
+#player-character, #cpu-character, #versus {
+  display: inline-block;
+  width: 33%;
+  height: 185px;
+  float: left;
+}
+
+#versus {
+  font-size: 80px;
+  width: 32%;
+  padding-top: 90px;
+}
+
 .name, .hp {
   padding: 5px;
+  font-size: 12px;
 }
 
 .img-character {
@@ -56,18 +75,12 @@ h1 {
 }
 
 .character {
-  display: inline-block;
   float: left;
   margin: 10px 10px;
   border: 2px solid #000;
   background-color: #000;
   font-size: 10px;
   color: #fff;
-}
-
-#player-character, #cpu-character {
-  display: inline-block;
-  width: 40%;
 }
 
 .player {
@@ -91,7 +104,11 @@ h1 {
   color: #fff;
 }
 
-.battlefield {  }
+#battlefield {
+  position: relative;
+  width: 75%;
+  margin: 30px auto;
+}
 
 .button {
   width: 100%;

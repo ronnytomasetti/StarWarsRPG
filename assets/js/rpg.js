@@ -4,7 +4,7 @@
 * 2016 UCF Coding Bootcamp
 */
 
-/* 
+/* HOMEWORK INSTRUCTIONS:
 * On load, player will choose one of four available characters.
 * Player will be this same character throughout the entire game.
 * Remaining players will move to an ENEMY area on the screen.
@@ -17,12 +17,12 @@
 * If player wins fight, they can select another opponent.
 *    Player wins game when all ENEMY are defeated.
 * If ENEMY wins fight, player loses entire game and must start over.
-* 
+* -------------------------------------------------------------------------------------
+* ADDITIONAL NOTES:
 * Characters have three attributes: health points, attack power, counter-attack power.
 *    - include XP to store the number of times the character has attacked and multiply by attack power.
 *      example: first attack 6, second attack 12, third ...
-*    
-*/
+* ------------------------------------------------------------------------------------- */
 
 var $characters = [];
 var $player;
@@ -41,13 +41,12 @@ $( document ).ready(function() {
 		  	var $characterImg = $("<IMG>").attr( "class", "img-character" ).attr( "src", "assets/img/" + data.characters[index].img );
 		  	var $characterHP = $("<P>").attr( "class", "hp text-center").html( data.characters[index].hp );
 
-		  	var $newCharacter = $("<DIV>")
-		  												.attr( "class", "character" )
-		  												.attr( "data-id", index )
-		  												.append( $characterName )
-		  												.append( $characterImg )
-		  												.append( $characterHP )
-		  												.one( "click", newPlayerSelection );
+		  	var $newCharacter = $("<DIV>").attr( "class", "character" )
+		  																.attr( "data-id", index )
+						  												.append( $characterName )
+						  												.append( $characterImg )
+						  												.append( $characterHP )
+						  												.one( "click", newPlayerSelection );
 
 		  	$("#characters-select").append( $newCharacter );
 		  });
@@ -68,7 +67,7 @@ $( document ).ready(function() {
 		var $attackButton = $( "<BUTTON>" ).addClass( "button disabled" ).text( "ATTACK!" );
 		$("#player-character").append($attackButton);
 
-	} // End playerSelected()
+	} // End newPlayerSelection()
 
 	function newEnemySelected( event ) {
 
@@ -82,7 +81,7 @@ $( document ).ready(function() {
 
 		$(".action-console").html("Press ATTACK! to fight " + $cpu.name);
 
-	} // End enemySelected()
+	} // End newEnemySelected()
 
 	function playerAttacking() {
 
@@ -121,11 +120,11 @@ $( document ).ready(function() {
 			}
 
 			$("#enemy-select").children().one( "click", newEnemySelected );
-			$(".action-console").html("You have defeated " + $cpu.name + ". Choose your next opponent.");
+			$(".action-console").html("You have defeated " + $cpu.name + "!<br>Choose your next opponent...");
 		}
 		else {
 			$("#player-character .player").remove();
-			$(".action-console").html("You've been defeated by " + $cpu.name + ". GAME OVER!!!");
+			$(".action-console").html("You've been defeated by " + $cpu.name + ".<br>GAME OVER!!!");
 			endGameWith(false);
 		}
 		
@@ -135,27 +134,33 @@ $( document ).ready(function() {
 		console.log("END GAME");
 
 		if (playerWin) {
-			$(".action-console").html("YOU WIN!!! Game Over...");
+			$(".action-console").html("YOU WIN!!!<br>Game Over!");
 		}
 
 		$(".button").text("Restart Game").removeClass("disabled");
 		$(".button").one( "click", function() {
 			location.reload();
 		});
-	}
 
+	} // END endGameWith()
+
+	/* --------------------------------------------------------
+	 BEGIN GAME FLOW BY CALLING retrieveCharacters() FUNCTION 
+	-------------------------------------------------------- */
 	retrieveCharacters();
+
 }); // END $(document).ready()
 
 
-	// REPEATS--------------
-		// LISTEN and HANDLE player selecting character to fight.
-		// Move enemy player to fight area.
-		// LISTEN and HANDLE player attacking enemy. (FIGHTING LOGIC)
-		// Process outcome of the battle round.
-		// If user won round, repeat until user has no enemy left to defeat.
-		// Else (**END ROUND) and display fresh game scene. (**NEW PLAYER SELECTION)
-	// ---------------------
 
-	// End current round.
-	// Display fresh game scene. (**NEW PLAYER SELECTION)
+//TODOS:
+// LISTEN and HANDLE player selecting character to fight.
+// Move enemy player to fight area.
+// LISTEN and HANDLE player attacking enemy. (FIGHTING LOGIC)
+// Process outcome of the battle round.
+// If user won round, repeat until user has no enemy left to defeat.
+// Else (**END ROUND) and display fresh game scene. (**NEW PLAYER SELECTION)
+// --------------------------------------------------------
+// End current round.
+// Display fresh game scene. (**NEW PLAYER SELECTION)
+// --------------------------------------------------------
