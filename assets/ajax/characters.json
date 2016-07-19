@@ -4,8 +4,8 @@
       "name": "Master Yoda",
       "img": "master_yoda.png",
       "xp": 0,
-      "hp": 150,
-      "ap": 10,
+      "hp": 135,
+      "ap": 8,
       "cap": 15
     },
     {
@@ -13,15 +13,15 @@
       "img": "master_kenobi.png",
       "xp": 0,
       "hp": 120,
-      "ap": 9,
+      "ap": 7,
       "cap": 12
     },
     {
       "name": "Darth Vader",
       "img": "darth_vader.png",
       "xp": 0,
-      "hp": 160,
-      "ap": 15,
+      "hp": 140,
+      "ap": 10,
       "cap": 20
     },
     {
@@ -29,7 +29,7 @@
       "img": "darth_maul.png",
       "xp": 0,
       "hp": 115,
-      "ap": 8,
+      "ap": 6,
       "cap": 12
     }
   ]
