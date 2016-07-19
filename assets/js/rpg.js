@@ -24,15 +24,94 @@
 *    
 */
 
-window.onload = startNewGame();
+var $characters = [];
+var $player;
+var $cpu;
 
-	// Declare global character objects and functions.
-	// Initialize character objects.
-	// Display fresh game scene. (**NEW PLAYER SELECTION)
-	// LISTEN and HANDLE on click when player selects a character.
-	// Assign that character to the player for that round.
-	// Set remaining characters as players enemy.
-	// Move enemy players to enemy area.
+$( document ).ready(function() {
+
+	function retrieveCharacters() {
+
+		$.getJSON( "assets/ajax/characters.json", function( data ) {
+			
+			$characters = $(data.characters);
+		  
+		  $.each( data.characters, function( index, value ) {
+		  	var $characterName = $("<P>").attr( "class", "name text-center").html( data.characters[index].name );
+		  	var $characterImg = $("<IMG>").attr( "class", "img-character" ).attr( "src", "assets/img/" + data.characters[index].img );
+		  	var $characterHP = $("<P>").attr( "class", "hp text-center").html( data.characters[index].hp );
+
+		  	var $newCharacter = $("<DIV>")
+		  												.attr( "class", "character" )
+		  												.attr( "data-id", index )
+		  												.append( $characterName )
+		  												.append( $characterImg )
+		  												.append( $characterHP )
+		  												.one( "click", newPlayerSelection );
+
+		  	$("#characters-select").append( $newCharacter );
+		  });
+		}); // End $.getJSON()
+
+	} // End retrieveCharacters()
+
+	function newPlayerSelection( event ) {
+
+		$player = $characters[$(this).attr("data-id")];
+		$(this).appendTo( "#player-character" ).addClass( "player" );
+
+		$(".action-console").html("Select an enemy to battle!");
+
+		$("#characters-select").children().unbind("click", newPlayerSelection);
+		$("#characters-select").children().appendTo( "#enemy-select" ).addClass( "enemy" ).one( "click", newEnemySelected );
+
+	} // End playerSelected()
+
+	function newEnemySelected( event ) {
+
+		$cpu = $characters[ $(this).attr("data-id") ];
+		$(this).appendTo( "#cpu-character" ).addClass( "defender" );
+
+		$("#enemy-select").children().unbind( "click", newEnemySelected );
+
+		var $attackButton = $( "<BUTTON>" ).addClass( "button" ).text( "ATTACK!" ).on( "click", playerAttacking );
+		$("#player-character").append($attackButton);
+
+		$(".action-console").html("Press ATTACK! to fight " + $cpu.name);
+
+	} // End enemySelected()
+
+	function playerAttacking() {
+
+		$player.xp++; // Player experience points increased by 1 every time they strike.
+		$cpu.hp -= $player.ap * $player.xp; // Calculate cpu taking hit by player attack power
+
+		if ($cpu.hp <= 0) {
+			postBattle(true);
+			return;
+		}
+
+		$player.hp -= $cpu.cap; // Calculate player taking hit by cpu counter attack power
+
+		$("#player-character .player .hp ").html($player.hp);
+		$("#cpu-character .defender .hp").html($cpu.hp);
+
+		$(".action-console").html("You attacked " + $cpu.name + " for " + $player.ap * $player.xp + " damage!" + "<br>"
+															+ $cpu.name + " attacked you back for " + $cpu.cap + " damage!");
+
+		if ($player.hp <= 0)
+			postBattle(false);
+		else if ($cpu.hp <= 0)
+			postBattle(true);
+	} // End playerAttacking()
+
+	function postBattle(withWin) {
+		console.log("POST BATTLE WITH WIN: " + withWin);
+	} // End postBattle()
+
+	retrieveCharacters();
+}); // END $(document).ready()
+
 
 	// REPEATS--------------
 		// LISTEN and HANDLE player selecting character to fight.
@@ -45,6 +124,3 @@ window.onload = startNewGame();
 
 	// End current round.
 	// Display fresh game scene. (**NEW PLAYER SELECTION)
-function startNewGame() {
-	console.log("New Game Started");
-}

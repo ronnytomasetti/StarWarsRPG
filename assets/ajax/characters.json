@@ -1,0 +1,36 @@
+{
+  "characters": [
+    {
+      "name": "Master Yoda",
+      "img": "master_yoda.png",
+      "xp": 0,
+      "hp": 150,
+      "ap": 10,
+      "cap": 15
+    },
+    {
+      "name": "Master Kenobi",
+      "img": "master_kenobi.png",
+      "xp": 0,
+      "hp": 120,
+      "ap": 9,
+      "cap": 12
+    },
+    {
+      "name": "Darth Vader",
+      "img": "darth_vader.png",
+      "xp": 0,
+      "hp": 160,
+      "ap": 15,
+      "cap": 20
+    },
+    {
+      "name": "Darth Maul",
+      "img": "darth_maul.png",
+      "xp": 0,
+      "hp": 115,
+      "ap": 8,
+      "cap": 12
+    }
+  ]
+}

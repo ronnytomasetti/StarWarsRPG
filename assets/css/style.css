@@ -1,0 +1,124 @@
+@import 'https://fonts.googleapis.com/css?family=Noto+Sans:400,700';
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.wrapper {
+  min-height: 100%;
+  height: auto;
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+.container-full-bg {
+  width: 100%;
+  min-height: 100%;
+  max-width: 100%;
+  background-image: url('../img/battle_of_hoth.png');
+  background-position: center;
+  background-size: cover;
+}
+
+h1 { 
+  display: block;
+  box-sizing: border-box;
+  font-size: 3em;
+  padding-top: 0.67em;
+  padding-bottom: 0.67em;
+  font-weight: bold;
+}
+
+#characters-select { 
+  width: 70%;
+  margin: 0 auto;
+  padding-left: 45px;
+}
+
+.name, .hp {
+  padding: 5px;
+}
+
+.img-character {
+  display: block;
+  margin: 0 auto;
+  width: 100px;
+  height: 100px;
+}
+
+.character {
+  display: inline-block;
+  float: left;
+  margin: 10px 10px;
+  border: 2px solid #000;
+  background-color: #000;
+  font-size: 10px;
+  color: #fff;
+}
+
+#player-character, #cpu-character {
+  display: inline-block;
+  width: 40%;
+}
+
+.player {
+  border: 2px solid #fff;
+  background-color: #fff;
+  font-size: 10px;
+  color: #000;
+}
+
+.enemy {
+  border: 2px solid red;
+  background-color: red;
+  font-size: 10px;
+  color: #000;
+}
+
+.defender {
+  border: 2px solid #000;
+  background-color: #000;
+  font-size: 10px;
+  color: #fff;
+}
+
+.battlefield {  }
+
+.button {
+  width: 100%;
+  margin: 10px auto;
+  background-color: #f44336;
+  color: #fff;
+  border: 2px solid #f44336;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+.button:hover {
+}
+
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.text-center { text-align: center; }
+
+.clearfix {
+  clear: both;
+  overflow: auto;
+}
