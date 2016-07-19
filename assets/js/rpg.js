@@ -65,6 +65,9 @@ $( document ).ready(function() {
 		$("#characters-select").children().unbind("click", newPlayerSelection);
 		$("#characters-select").children().appendTo( "#enemy-select" ).addClass( "enemy" ).one( "click", newEnemySelected );
 
+		var $attackButton = $( "<BUTTON>" ).addClass( "button disabled" ).text( "ATTACK!" );
+		$("#player-character").append($attackButton);
+
 	} // End playerSelected()
 
 	function newEnemySelected( event ) {
@@ -74,8 +77,8 @@ $( document ).ready(function() {
 
 		$("#enemy-select").children().unbind( "click", newEnemySelected );
 
-		var $attackButton = $( "<BUTTON>" ).addClass( "button" ).text( "ATTACK!" ).on( "click", playerAttacking );
-		$("#player-character").append($attackButton);
+		$(".button").removeClass("disabled");
+		$(".button").on( "click", playerAttacking );
 
 		$(".action-console").html("Press ATTACK! to fight " + $cpu.name);
 
@@ -101,13 +104,45 @@ $( document ).ready(function() {
 
 		if ($player.hp <= 0)
 			postBattle(false);
-		else if ($cpu.hp <= 0)
-			postBattle(true);
+
 	} // End playerAttacking()
 
 	function postBattle(withWin) {
-		console.log("POST BATTLE WITH WIN: " + withWin);
+
+		$(".button").unbind( "click", playerAttacking );
+		$(".button").addClass("disabled");
+
+		if (withWin) {
+			$("#cpu-character .defender").remove();
+
+			if ( $( "#enemy-select" ).has( ".enemy" ).length == 0 ) {
+				endGameWith(true);
+				return;
+			}
+
+			$("#enemy-select").children().one( "click", newEnemySelected );
+			$(".action-console").html("You have defeated " + $cpu.name + ". Choose your next opponent.");
+		}
+		else {
+			$("#player-character .player").remove();
+			$(".action-console").html("You've been defeated by " + $cpu.name + ". GAME OVER!!!");
+			endGameWith(false);
+		}
+		
 	} // End postBattle()
+
+	function endGameWith(playerWin) {
+		console.log("END GAME");
+
+		if (playerWin) {
+			$(".action-console").html("YOU WIN!!! Game Over...");
+		}
+
+		$(".button").text("Restart Game").removeClass("disabled");
+		$(".button").one( "click", function() {
+			location.reload();
+		});
+	}
 
 	retrieveCharacters();
 }); // END $(document).ready()
