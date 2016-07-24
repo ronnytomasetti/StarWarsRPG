@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Electrolize);
 
-html, body {
+html, body
+{
   width: 100%;
   height: 100%;
 }
@@ -8,14 +9,16 @@ html, body {
 html { min-height: 100%; }
 body { font-family: 'Electrolize', sans-serif; }
 
-.wrapper {
+.wrapper
+{
   min-height: 100%;
   height: auto;
   max-width: 768px;
   margin: 0 auto;
 }
 
-.container-full-bg {
+.container-full-bg
+{
   width: 100%;
   min-height: 100%;
   max-width: 100%;
@@ -24,7 +27,8 @@ body { font-family: 'Electrolize', sans-serif; }
   background-size: cover;
 }
 
-.game-title { 
+.game-title
+{ 
   display: block;
   box-sizing: border-box;
   font-size: 3em;
@@ -33,7 +37,8 @@ body { font-family: 'Electrolize', sans-serif; }
   font-weight: bold;
 }
 
-.action-console {
+.action-console
+{
   background-color: #000;
   color: #fff;
   font-size: 15px;
@@ -43,38 +48,44 @@ body { font-family: 'Electrolize', sans-serif; }
   padding-top: 1em;
 }
 
-#characters-select, #enemy-select { 
+#characters-select, #enemy-select
+{ 
   width: 75%;
   margin: 0 auto;
   padding-left: 45px;
 }
 
-#player-character, #cpu-character, #versus {
+#player-character, #cpu-character, #versus
+{
   display: inline-block;
   width: 33%;
   height: 185px;
   float: left;
 }
 
-#versus {
+#versus
+{
   font-size: 80px;
   width: 32%;
   padding-top: 90px;
 }
 
-.name, .hp {
+.name, .hp
+{
   padding: 5px;
   font-size: 12px;
 }
 
-.img-character {
+.img-character
+{
   display: block;
   margin: 0 auto;
   width: 100px;
   height: 100px;
 }
 
-.character {
+.character
+{
   float: left;
   margin: 10px 10px;
   border: 2px solid #000;
@@ -83,34 +94,39 @@ body { font-family: 'Electrolize', sans-serif; }
   color: #fff;
 }
 
-.player {
+.player
+{
   border: 2px solid #fff;
   background-color: #fff;
   font-size: 10px;
   color: #000;
 }
 
-.enemy {
+.enemy
+{
   border: 2px solid red;
   background-color: red;
   font-size: 10px;
   color: #000;
 }
 
-.defender {
+.defender
+{
   border: 2px solid #000;
   background-color: #000;
   font-size: 10px;
   color: #fff;
 }
 
-#battlefield {
+#battlefield
+{
   position: relative;
   width: 75%;
   margin: 30px auto;
 }
 
-.button {
+.button
+{
   width: 100%;
   margin: 10px auto;
   background-color: #f44336;
@@ -125,17 +141,16 @@ body { font-family: 'Electrolize', sans-serif; }
   transition-duration: 0.4s;
 }
 
-.button:hover {
-}
-
-.disabled {
+.disabled
+{
   opacity: 0.6;
   cursor: not-allowed;
 }
 
 .text-center { text-align: center; }
 
-.clearfix {
+.clearfix
+{
   clear: both;
   overflow: auto;
 }
