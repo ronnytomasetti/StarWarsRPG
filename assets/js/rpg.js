@@ -1,172 +1,173 @@
 /*
-* Star Wars RPG
-* Ronny Tomasetti
-* 2016 UCF Coding Bootcamp
-*/
+ * Star Wars RPG
+ * Ronny Tomasetti
+ * 2016 UCF Coding Bootcamp
+ */
 
 /* HOMEWORK INSTRUCTIONS:
-* On load, player will choose one of four available characters.
-* Player will be this same character throughout the entire game.
-* Remaining players will move to an ENEMY area on the screen.
-* Player will choose an opponent from the ENEMY area to fight against.
-* ENEMY will move to the battle area to fight against player's character.
-* Player will now have the ability to fight enemy using the attack button.
-*   - Once player attacks, ENEMY will take hit and display losing HP below their image.
-*   - ENEMY will counter attack, player will now take hit and display losing HP.
-*   - REPEATS until player or ENEMY have no HP left to fight.
-* If player wins fight, they can select another opponent.
-*    Player wins game when all ENEMY are defeated.
-* If ENEMY wins fight, player loses entire game and must start over.
-* -------------------------------------------------------------------------------------
-* ADDITIONAL NOTES:
-* Characters have three attributes: health points, attack power, counter-attack power.
-*    - include XP to store the number of times the character has attacked and multiply by attack power.
-*      example: first attack 6, second attack 12, third ...
-* ------------------------------------------------------------------------------------- */
+ * On load, player will choose one of four available characters.
+ * Player will be this same character throughout the entire game.
+ * Remaining players will move to an ENEMY area on the screen.
+ * Player will choose an opponent from the ENEMY area to fight against.
+ * ENEMY will move to the battle area to fight against player's character.
+ * Player will now have the ability to fight enemy using the attack button.
+ *   - Once player attacks, ENEMY will take hit and display losing HP below their image.
+ *   - ENEMY will counter attack, player will now take hit and display losing HP.
+ *   - REPEATS until player or ENEMY have no HP left to fight.
+ * If player wins fight, they can select another opponent.
+ *    Player wins game when all ENEMY are defeated.
+ * If ENEMY wins fight, player loses entire game and must start over.
+ * -------------------------------------------------------------------------------------
+ * ADDITIONAL NOTES:
+ * Characters have three attributes: health points, attack power, counter-attack power.
+ *    - include XP to store the number of times the character has attacked and multiply by attack power.
+ *      example: first attack 6, second attack 12, third ...
+ * ------------------------------------------------------------------------------------- */
 
 var characters = [];
 var player;
 var cpu;
 
-$( document ).ready( function() {
+$(document).ready(function () {
 
-	function retrieveCharacters() {
-		
-		$.getJSON( 'assets/js/characters.json', function( data )
-		{	
-			characters = $( data.characters );
-		  
-		  $.each( data.characters, function( index, value )
-		  {
-		  	var $characterName = $( '<p>' ).addClass( 'name text-center' )
-		  																 .html( data.characters[ index ].name );
+    function retrieveCharacters() {
 
-		  	var $characterImg = $( '<img>' ).addClass( 'img-character' )
-		  																	.attr( 'src', 'assets/img/' + data.characters[index].img );
+        $.getJSON('assets/js/characters.json', function (data) {
+            characters = $(data.characters);
 
-		  	var $characterHP = $( '<p>' ).addClass( 'hp text-center' )
-		  															 .html( data.characters[index].hp );
+            $.each(data.characters, function (index, value) {
+                var $characterName = $('<p>').addClass('name text-center')
+                    .html(data.characters[index].name);
 
-		  	var $newCharacter = $( '<div>' ).addClass( 'character' )
-		  																	.attr( 'data-id', index )
-						  													.append( $characterName )
-						  													.append( $characterImg )
-						  													.append( $characterHP )
-						  													.one( 'click', newPlayerSelection );
+                var $characterImg = $('<img>').addClass('img-character')
+                    .attr('src', 'assets/img/' + data.characters[index].img);
 
-		  	$( '#characters-select' ).append( $newCharacter );
-		  }); // END .each()
-		}); // END $.getJSON()
-	} // END retrieveCharacters()
+                var $characterHP = $('<p>').addClass('hp text-center')
+                    .html(data.characters[index].hp);
 
-	function newPlayerSelection( event )
-	{
-		player = characters[ $( this ).attr( 'data-id' ) ];
+                var $newCharacter = $('<div>').addClass('character')
+                    .attr('data-id', index)
+                    .append($characterName)
+                    .append($characterImg)
+                    .append($characterHP)
+                    .one('click', newPlayerSelection);
 
-		$( this ).appendTo( '#player-character' )
-						 .addClass( 'player' );
+                $('#characters-select').append($newCharacter);
+            }); // END .each()
+        }); // END $.getJSON()
+    } // END retrieveCharacters()
 
-		$( '#characters-select' ).children()
-														 .unbind( 'click', newPlayerSelection );
+    function newPlayerSelection(event) {
+        player = characters[$(this).attr('data-id')];
 
-		$( '#characters-select' ).children()
-														 .appendTo( '#enemy-select' )
-														 .addClass( 'enemy' )
-														 .one( 'click', newEnemySelected );
+        $(this).appendTo('#player-character')
+            .addClass('player');
 
-		var $attackButton = $( '<button>' ).addClass( 'button disabled' )
-																			 .text( 'ATTACK!' );
+        $('#characters-select').children()
+            .unbind('click', newPlayerSelection);
 
-		$( '#player-character').append($attackButton);
-		$( '.action-console' ).html( 'Select an enemy to battle!' );
-	} // END newPlayerSelection()
+        $('#characters-select').children()
+            .appendTo('#enemy-select')
+            .addClass('enemy')
+            .one('click', newEnemySelected);
 
-	function newEnemySelected( event )
-	{
-		cpu = characters[ $( this ).attr( 'data-id' ) ];
+        var $attackButton = $('<button>').addClass('button disabled')
+            .text('ATTACK!');
 
-		$( this ).appendTo( '#cpu-character' )
-						 .addClass( 'defender' );
+        $('#player-character').append($attackButton);
+        $('.action-console').html('Select an enemy to battle!');
+    } // END newPlayerSelection()
 
-		$( '#enemy-select' ).children()
-												.unbind( 'click', newEnemySelected );
+    function newEnemySelected(event) {
+        cpu = characters[$(this).attr('data-id')];
 
-		$( '.button' ).removeClass('disabled')
-									.on( 'click', playerAttacking );
+        $(this).appendTo('#cpu-character')
+            .addClass('defender');
 
-		$( '.action-console' ).html( 'Press ATTACK! to fight ' + cpu.name );
-	} // End newEnemySelected()
+        $('#enemy-select').children()
+            .unbind('click', newEnemySelected);
 
-	function playerAttacking()
-	{
-		player.xp++; // Player experience points increased by 1 every time they strike.
-		cpu.hp -= player.ap * player.xp; // Calculate cpu taking hit by player attack power.
+        $('.button').removeClass('disabled')
+            .on('click', playerAttacking);
 
-		if ( cpu.hp <= 0 )
-		{
-			postBattle( true );
-			return;
-		}
+        $('.action-console').html('Press ATTACK! to fight ' + cpu.name);
+    } // End newEnemySelected()
 
-		player.hp -= cpu.cap; // Calculate player taking hit by cpu counter attack power.
+    function playerAttacking() {
+        player.xp++; // Player experience points increased by 1 every time they strike.
+        cpu.hp -= player.ap * player.xp; // Calculate cpu taking hit by player attack power.
 
-		// Update hp variables.
-		$( '#player-character .player .hp' ).html( player.hp );
-		$( '#cpu-character .defender .hp' ).html( cpu.hp );
+        if (cpu.hp <= 0) {
+            postBattle(true);
+            return;
+        }
 
-		$( '.action-console' ).html( 'You attacked ' + cpu.name + ' for ' + player.ap * player.xp + ' damage!' + '<br>'
-																	+ cpu.name + ' attacked you back for ' + cpu.cap + ' damage!' );
+        player.hp -= cpu.cap; // Calculate player taking hit by cpu counter attack power.
 
-		if ( player.hp <= 0 )
-		{
-			postBattle( false );
-		}
-	} // End playerAttacking()
+        // Update hp variables.
+        $('#player-character .player .hp').html(player.hp);
+        $('#cpu-character .defender .hp').html(cpu.hp);
 
-	function postBattle( withWin )
-	{
-		$( '.button' ).addClass( 'disabled' )
-									.unbind( 'click', playerAttacking );
+        $('.action-console').html('You attacked ' + cpu.name + ' for ' + player.ap * player.xp + ' damage!' + '<br>'
+            + cpu.name + ' attacked you back for ' + cpu.cap + ' damage!');
 
-		if (withWin)
-		{
-			$( '#cpu-character .defender' ).remove();
+        if (player.hp <= 0) {
+            postBattle(false);
+        }
+    } // End playerAttacking()
 
-			if ( $( '#enemy-select' ).has( '.enemy' ).length == 0 )
-			{
-				endGameWith( true );
-				return;
-			}
+    function postBattle(withWin) {
+        $('.button').addClass('disabled')
+            .unbind('click', playerAttacking);
 
-			$( '#enemy-select' ).children()
-													.one( 'click', newEnemySelected );
+        if (withWin) {
+            $('#cpu-character .defender').remove();
 
-			$( '.action-console' ).html( 'You have defeated ' + cpu.name + '!<br>Choose your next opponent...' );
-		}
-		else
-		{
-			$( '#player-character .player' ).remove();
-			$( '.action-console' ).html( "You've been defeated by " + cpu.name + ".<br>GAME OVER!!!" );
-			endGameWith( false );
-		}
-	} // End postBattle()
+            if ($('#enemy-select').has('.enemy').length == 0) {
+                endGameWith(true);
+                return;
+            }
 
-	function endGameWith( playerWin )
-	{
-		if ( playerWin )
-		{
-			$( '.action-console' ).html( 'YOU WIN!!!<br>Game Over!' );
-		}
+            $('#enemy-select').children()
+                .one('click', newEnemySelected);
 
-		$( '.button' ).removeClass( 'disabled' )
-									.text( 'Restart Game' );
+            $('.action-console').html('You have defeated ' + cpu.name + '!<br>Choose your next opponent...');
+        }
+        else {
+            $('#player-character .player').remove();
+            $('.action-console').html("You've been defeated by " + cpu.name + ".<br>GAME OVER!!!");
+            endGameWith(false);
+        }
+    } // End postBattle()
 
-		$( '.button' ).one( 'click', function() { location.reload() });
-	} // END endGameWith()
+    function endGameWith(playerWin) {
+        if (playerWin) {
+            $('.action-console').html('YOU WIN!!!<br>Game Over!');
+        }
 
-	/* --------------------------------------------------------
-	 BEGIN GAME FLOW BY CALLING retrieveCharacters() FUNCTION 
-	-------------------------------------------------------- */
-	retrieveCharacters();
+        $('.button').removeClass('disabled')
+            .text('Restart Game');
+
+        $('.button').one('click', function () {
+            location.reload()
+        });
+    } // END endGameWith()
+
+    /* --------------------------------------------------------
+     BEGIN GAME FLOW BY CALLING retrieveCharacters() FUNCTION
+     -------------------------------------------------------- */
+    retrieveCharacters();
 
 }); // END $(document).ready()
+
+
+// CONCEPTS LEARNED FROM DEMO
+// Chain fadeIn() jQuery functions
+// Use .data('player', player) to store the entire player object
+    // Storing the data inside of the DOM element allows me to keep it all in one place.
+    // var player = $('#hero div').data('player');
+// CUSTOM EVENTS
+//.on('refresh', function(){ } ) and .trigger('refresh')
+// confirm dialog used for true or false variable.
+// jQuery animate function
+
